@@ -1,0 +1,49 @@
+{% extends 'base.html' %}
+{% block content %}
+    <form method="post">
+        {% csrf_token %}
+        <fieldset>
+            <legend>Upload Image</legend>
+            {{ form.as_p }}
+            <input type="submit" value="Create">
+        </fieldset>
+    </form>
+    <br>
+
+    <form method="get" action="{% url 'tickets:tickets' %}">
+        <label for="status">Status:</label>
+        <select id="status" name="status">
+            <option value=""></option>
+            <option {% if status == 'pending' %}selected{% endif %} value="pending">pending</option>
+            <option {% if status == 'completed' %}selected{% endif %} value="completed">completed</option>
+        </select>
+
+        <label for="created_datetime__gte">Since: </label>
+        <input type="datetime-local" id="created_datetime__gte" name="created_datetime__gte"
+               value="{{ created_datetime__gte }}">
+
+        <label for="created_datetime__lte">Before: </label>
+        <input type="datetime-local" id="created_datetime__lte" name="created_datetime__lte"
+               value="{{ created_datetime__lte }}">
+
+        <input type="submit" value="Apply">
+    </form>
+
+    <table border="1">
+        <tr>
+            <td>ID</td>
+            <td>Status</td>
+            <td>Image Length</td>
+            <td>Created datetime</td>
+        </tr>
+        {% for ticket in tickets %}
+            <tr>
+                <td><a href="{% url 'tickets:ticket_detail' pk=ticket.id %}">
+                    Ticket {{ ticket.id }}</a></td>
+                <td>{{ ticket.status }}</td>
+                <td>{{ ticket.image_length }}</td>
+                <td>{{ ticket.created_datetime }}</td>
+            </tr>
+        {% endfor %}
+    </table>
+{% endblock %}

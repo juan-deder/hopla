@@ -1,0 +1,29 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Hopla</title>
+</head>
+<body>
+<nav>
+    <ul>
+        <li><a href="{% url 'home' %}">Home</a></li>
+        <li><a href="{% url 'tickets:tickets' %}">Tickets</a></li>
+        <li><a href="{% url 'images:images' %}">Images</a></li>
+        <li><a href="{% url 'register' %}">Register</a></li>
+        <li><a href="{% url 'login' %}">Login</a></li>
+        <li>
+            <form method="post" action="{% url 'logout' %}">
+                {% csrf_token %}
+                <a href="javascript:{}" onclick="document.getElementsByTagName('form')[0].submit();">
+                    Logout
+                </a>
+            </form>
+        </li>
+    </ul>
+</nav>
+{% block content %}
+    <p>Ticket Images</p>
+{% endblock %}
+</body>
+</html>
