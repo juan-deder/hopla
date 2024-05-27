@@ -5,13 +5,25 @@ services:
       - postgres
       - redis
     environment:
-      - CLOUDINARY_URL=cloudinary://596284785988378:qr4Rf5ce9TTZZTparbmueUY-WNo@dafpjhuiu
       - DJANGO_SETTINGS_MODULE=hopla_backend.settings
     image: hopla_backend
     ports:
       - 8000:8000
     volumes:
       - .:/app
+
+  worker:
+    build: .
+    depends_on:
+      - postgres
+      - redis
+    environment:
+      - CLOUDINARY_URL=cloudinary://596284785988378:qr4Rf5ce9TTZZTparbmueUY-WNo@dafpjhuiu
+      - DJANGO_SETTINGS_MODULE=hopla_backend.settings
+    image: hopla_backend
+    volumes:
+      - .:/app
+    command: celery -A hopla_backend worker -l info
 
   postgres:
     image: postgres:16
