@@ -2,7 +2,8 @@
 {% block content %}
     <h1>Ticket {{ object.id }}</h1>
     <h2>Status: {{ object.status }}</h2>
+    <h3>Images:</h3>
     {% for image in images %}
-        <img width="50" height="50" src="{{ image.url }}" alt="{{ image.id }}">
+        <img width="250" height="250" src="{{ image.url }}" alt="{{ image.id }}">
     {% endfor %}
 {% endblock %}
